@@ -1,0 +1,790 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html lang='en-US'>
+
+<!--
+	Copyright (c) 1999-2010 by Digital Mars
+	All Rights Reserved Written by Walter Bright
+	http://www.digitalmars.com
+  -->
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" >
+<title>std.typelist - D Programming Language - Digital Mars</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script src="/js/codemirror.js"></script>
+<script src="/js/d.js"></script>
+<script src="/js/run.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/css/codemirror.css" />
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+
+<script type="text/javascript">
+function listanchors()
+{
+    if (typeof inhibitQuickIndex !== 'undefined') return;
+    var a = document.getElementById("quickindex");
+    if (!a) return;
+    var newText = "";
+    var hash = new Array;
+    var n = 0;
+    var values = new Array;
+    // List all anchors.
+    for (var i = 0; i < document.anchors.length; i++)
+    {
+        var a = document.anchors[i];
+        var text = a.name;
+        if (hash[text] > 0) continue;
+        hash[text] = 1;
+        values[n++] = a.name
+    }
+
+    values.sort();
+
+    for(var i = 0; i < values.length; i++) {
+        var a = values[i];
+        newText += ' \x3Ca href="\x23' + a +
+            '"\x3E\x3Cspan class="d_psymbol"\x3E' + a + '\x3C/span\x3E\x3C/a\x3E';
+    }
+    if (newText != "") newText = "\x3Cp\x3E\x3Cb\x3EJump to:\x3C/b\x3E" + newText + "\x3C/p\x3E";
+    var a = document.getElementById("quickindex");
+    a.innerHTML = newText;
+}
+</script>
+
+<script src="/js/hyphenate.js" type="text/javascript"></script>
+
+</head>
+
+<body onload="listanchors()" class='hyphenate'>
+
+<div id="top">
+	<div id="search-box">
+		<form method="get" action="http://google.com/search">
+			<img src="/images/search-left.gif" width="11" height="22" alt=""><input id="q" name="q"><input type="image" id="search-submit" name="submit" src="/images/search-button.gif">
+			<input type="hidden" id="domains" name="domains" value="dlang.org">
+			<input type="hidden" id="sourceid" name="sourceid" value="google-search">
+			<div id="search-dropdown">
+				<select id="sitesearch" name="sitesearch" size="1">
+					<option value="dlang.org">Entire D  Site</option>
+					<option value="dlang.org/phobos">Library Reference</option>
+					<option value="www.digitalmars.com/d/archives">Newsgroup Archives</option>
+				</select>
+			</div>
+		</form>
+	</div>
+	<div id="header">
+		<a href="/"><img id="logo" width="125" height="95" border="0" alt="D Logo" src="/images/dlogo.png"></a>
+		<a id="d-language" href="/">D Programming Language </a>
+	</div>
+</div>
+
+<div id="navigation">
+    
+<div class="navblock">
+<form method="get" action="http://www.google.com/search">
+<div id="searchbox">
+<input name="q" size="10" value="RTL Search" onFocus='if(this.value == "RTL Search"){this.value="";}'>
+<input type="hidden" name="domains" value="www.digitalmars.com">
+<input type="hidden" name="sitesearch" value="www.digitalmars.com/d/2.0/phobos">
+<input type="hidden" name="sourceid" value="google-search">
+<input type="submit" name="submit" value="Go">
+</div>
+</form>
+<div id="toctop">
+    <ul><li><a href="../index.html" title="D Programming Language">D</a></li>
+	<li><a href="../spec.html" title="D Language Specification">Language</a></li>
+	<li><a href="../phobos/index.html" title="D Runtime Library">Phobos</a></li>
+	<li><a href="../phobos-prerelease/index.html" title="D Runtime Library (prerelease)">Phobos (prerelease)</a></li>
+	<li><a href="../comparison.html" title="Language Comparisons">Comparisons</a></li>
+    </ul>
+</div>
+</div>
+    
+<div class="navblock">
+    <ul><li><a href="object.html" title="root of object hierarchy">object</a></li>
+    </ul>
+    <h2><a href="index.html#std" title="D standard modules">std</a></h2>
+    <ul><li><a href="std_algorithm.html" title="General-purpose algorithms">std.algorithm</a></li>
+	<li><a href="std_array.html" title="Array functions">std.array</a></li>
+	<li><a href="std_ascii.html" title="Functions which operate on ASCII characters">std.ascii</a></li>
+	<li><a href="std_base64.html" title="Encode/decode base64 format">std.base64</a></li>
+	<li><a href="std_bigint.html" title="Arbitrary-precision ('bignum') arithmetic">std.bigint</a></li>
+	<li><a href="std_bitmanip.html" title="Bit-level manipulation">std.bitmanip</a></li>
+	<li><a href="std_compiler.html" title="Information about the D compiler implementation">std.compiler</a></li>
+	<li><a href="std_complex.html" title="Complex numbers">std.complex</a></li>
+	<li><a href="std_concurrency.html" title="Message Passing">std.concurrency</a></li>
+	<li><a href="std_container.html" title="Containers">std.container</a></li>
+	<li><a href="std_contracts.html" title="Think assert">std.contracts</a></li>
+	<li><a href="std_conv.html" title="Conversion of strings to integers">std.conv</a></li>
+	<li><a href="std_cpuid.html" title="CPU identification">std.cpuid</a></li>
+	<li><a href="std_csv.html" title="CSV file parser">std.csv</a></li>
+	<li><a href="std_ctype.html" title="Simple character classification">std.ctype</a></li>
+	<li><a href="std_date.html" title="Date and time functions">std.date</a></li>
+	<li><a href="std_datetime.html" title="Date and time-related types and functions">std.datetime</a></li>
+	<li><a href="std_demangle.html" title="Demangle D names">std.demangle</a></li>
+	<li><a href="std_encoding.html" title="Character and string encoding">std.encoding</a></li>
+	<li><a href="std_exception.html" title="Exceptions and error handling">std.exception</a></li>
+	<li><a href="std_file.html" title="Basic file operations">std.file</a></li>
+	<li><a href="std_format.html" title="Formatted conversions of values to strings">std.format</a></li>
+	<li><a href="std_functional.html" title="functional">std.functional</a></li>
+	<li><a href="std_getopt.html" title="Command line options">std.getopt</a></li>
+	<li><a href="std_gregorian.html" title="Gregorian Calendar">std.gregorian</a></li>
+	<li><a href="std_json.html" title="JSON reader">std.json</a></li>
+	<li><a href="std_math.html" title="the usual math functions">std.math</a></li>
+	<li><a href="std_mathspecial.html" title="mathematical special functions">std.mathspecial</a></li>
+	<li><a href="std_md5.html" title="Compute MD5 digests">std.md5</a></li>
+	<li><a href="std_metastrings.html" title="Metaprogramming with strings">std.metastrings</a></li>
+	<li><a href="std_mmfile.html" title="Memory mapped files">std.mmfile</a></li>
+	<li><a href="std_numeric.html" title="Numeric algorithms">std.numeric</a></li>
+	<li><a href="std_outbuffer.html" title="Assemble data into an array of bytes">std.outbuffer</a></li>
+	<li><a href="std_parallelism.html" title="High-level primitives for SMP parallelism">std.parallelism</a></li>
+	<li><a href="std_path.html" title="Manipulate file names, path names, etc.">std.path</a></li>
+	<li><a href="std_process.html" title="Create/destroy processes">std.process</a></li>
+	<li><a href="std_random.html" title="Random number generation">std.random</a></li>
+	<li><a href="std_range.html" title="Ranges">std.range</a></li>
+	<li><a href="std_regex.html" title="regular expressions">std.regex</a></li>
+	<li><a href="std_regexp.html" title="regular expressions (deprecated)">std.regexp</a></li>
+	<li><a href="std_signals.html" title="Signals">std.signals</a></li>
+	<li><a href="std_socket.html" title="Sockets">std.socket</a></li>
+	<li><a href="std_socketstream.html" title="Stream for a blocking, connected Socket">std.socketstream</a></li>
+	<li><a href="std_stdint.html" title="Integral types for various purposes">std.stdint</a></li>
+	<li><a href="std_stdio.html" title="Standard I/O">std.stdio</a></li>
+	<li><a href="std_cstream.html" title="Stream I/O">std.cstream</a></li>
+	<li><a href="std_stream.html" title="Stream I/O">std.stream</a></li>
+	<li><a href="std_string.html" title="Basic string operations">std.string</a></li>
+	<li><a href="std_system.html" title="Inquire about the CPU, operating system">std.system</a></li>
+	<li><a href="std_traits.html" title="Type traits">std.traits</a></li>
+	<li><a href="std_typecons.html" title="Type constructors">std.typecons</a></li>
+	<li><a href="std_typetuple.html" title="Type tuples">std.typetuple</a></li>
+	<li><a href="std_uni.html" title="Unicode classification">std.uni</a></li>
+	<li><a href="std_uri.html" title="Encode and decode Uniform Resource Identifiers (URIs)">std.uri</a></li>
+	<li><a href="std_utf.html" title="Encode and decode utf character encodings">std.utf</a></li>
+	<li><a href="std_uuid.html" title="Generate and use UUIDs">std.uuid</a></li>
+	<li><a href="std_variant.html" title="Stores all types in a uniform, dynamically-checked representation">std.variant</a></li>
+	<li><a href="std_xml.html" title="XML file processing">std.xml</a></li>
+	<li><a href="std_zip.html" title="Read/write zip archives">std.zip</a></li>
+	<li><a href="std_zlib.html" title="Compression / Decompression of data">std.zlib</a></li>
+	<li><a href="std_c_fenv.html" title="Floating point environment">std.c.fenv</a></li>
+	<li><a href="std_c_locale.html" title="Locale">std.c.locale</a></li>
+	<li><a href="std_c_math.html" title="Math">std.c.math</a></li>
+	<li><a href="std_c_process.html" title="Process">std.c.process</a></li>
+	<li><a href="std_c_stdarg.html" title="Variadic arguments">std.c.stdarg</a></li>
+	<li><a href="std_c_stddef.html" title="Standard definitions">std.c.stddef</a></li>
+	<li><a href="std_c_stdio.html" title="Standard I/O">std.c.stdio</a></li>
+	<li><a href="std_c_stdlib.html" title="Standard library">std.c.stdlib</a></li>
+	<li><a href="std_c_string.html" title="Strings">std.c.string</a></li>
+	<li><a href="std_c_time.html" title="Time">std.c.time</a></li>
+	<li><a href="std_c_wcharh.html" title="Wide characters">std.c.wcharh</a></li>
+	<li><a href="std_net_curl.html" title="High level curl wrapper">std.net.curl</a></li>
+	<li><a href="std_net_isemail.html" title="Validate e-mail addresses">std.net.isemail</a></li>
+	<li><a href="std_windows_charset.html" title="Conversion to/from Windows character sets">std.windows.charset</a></li>
+	<li><a href="index.html#std_windows" title="Modules specific to Windows">std.windows</a></li>
+	<li><a href="index.html#std_linux" title="Modules specific to Windows">std.linux</a></li>
+	<li><a href="index.html#std_c_windows" title="C Windows API">std.c.windows</a></li>
+	<li><a href="index.html#std_c_linux" title="C Linux API">std.c.linux</a></li>
+    </ul>
+    <h2><a href="index.html#etc" title="D etc modules">etc</a></h2>
+    <ul><li><a href="etc_c_curl.html" title="Interface to libcurl library">etc.c.curl</a></li>
+	<li><a href="etc_c_sqlite3.html" title="Interface to sqlite3 library">etc.c.sqlite3</a></li>
+	<li><a href="etc_c_zlib.html" title="Interface to zlib library">etc.c.zlib</a></li>
+    </ul>
+    <h2><a href="index.html#core" title="D core modules">core</a></h2>
+    <ul><li><a href="core_atomic.html" title="Atomic operations">core.atomic</a></li>
+	<li><a href="core_bitop.html" title="Bitwise operations">core.bitop</a></li>
+	<li><a href="core_cpuid.html" title="CPU identification">core.cpuid</a></li>
+	<li><a href="core_exception.html" title="Root of exception hierarchy">core.exception</a></li>
+	<li><a href="core_memory.html" title="Interface to memory management">core.memory</a></li>
+	<li><a href="core_runtime.html" title="Interface to D runtime library internals">core.runtime</a></li>
+	<li><a href="core_thread.html" title="Thread management">core.thread</a></li>
+	<li><a href="core_time.html" title="Core time functionality">core.time</a></li>
+	<li><a href="core_vararg.html" title="Variable function arguments">core.vararg</a></li>
+	<li><a href="core_sync_barrier.html" title="Synchronizing progress of a group of threads">core.sync.barrier</a></li>
+	<li><a href="core_sync_condition.html" title="Synchronized condition checking">core.sync.condition</a></li>
+	<li><a href="core_sync_config.html" title="Stuff for core.sync">core.sync.config</a></li>
+	<li><a href="core_sync_exception.html" title="SyncException">core.sync.exception</a></li>
+	<li><a href="core_sync_mutex.html" title="Mutexes">core.sync.mutex</a></li>
+	<li><a href="core_sync_rwmutex.html" title="R/W mutually exclusive access">core.sync.rwmutex</a></li>
+	<li><a href="core_sync_semaphore.html" title="Semaphores">core.sync.semaphore</a></li>
+    </ul>
+</div>
+</div><!--/navigation-->
+<div id="content">
+    
+<div id="tools">
+	<!--span id="lastupdate">Last update Sat Oct  6 01:20:25 2012
+</span-->
+	<a href="https://github.com/D-Programming-Language/phobos/edit/master/std/typelist2.d" class="tip button">
+		Improve this page
+		<span>
+			Quickly fork, edit online, and submit a pull request for this page.
+			Requires a signed-in GitHub account. This works well for small changes.
+			If you'd like to make larger changes you may want to consider using
+			local clone.
+		</span>
+	</a>
+	<a href="http://www.prowiki.org/wiki4d/wiki.cgi?DocComments/" class="tip button">
+		Page wiki
+		<span>
+	        View or edit the community-maintained wiki page associated with this page.
+		</span>
+	</a>
+</div>
+    <h1>std.typelist</h1>
+    <div id=quickindex class=quickindex></div>
+    <!-- Generated by Ddoc from std/typelist2.d -->
+This module contains the <a href="#TypeList"><span class="d_inlinecode">TypeList</span></a> type and related metafunctions.
+<p></p>
+<b>Authors:</b><br>Arlen Avakian
+<p></p>
+<b>License:</b><br><a href="http://boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+<p></p>
+<b>Source:</b><br>
+<a href="https://github.com/D-Programming-Language/phobos/blob/master/std/typelist2.d">std/typelist2.d</a><p></p>
+
+<dl><dt class="d_decl">template <a name="_and"></a><span class="ddoc_psymbol">_and</span>(bool A,bool B)</dt>
+<dd>Boolean and.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_psymbol">_and</span>!(<span class="d_keyword">true</span>, <span class="d_keyword">false</span>) == <span class="d_keyword">false</span>);
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="_or"></a><span class="ddoc_psymbol">_or</span>(bool A,bool B)</dt>
+<dd>Boolean or.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_psymbol">_or</span>!(<span class="d_keyword">true</span>, <span class="d_keyword">false</span>) == <span class="d_keyword">true</span>);
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="_not"></a><span class="ddoc_psymbol">_not</span>(bool A)</dt>
+<dd>Boolean not.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_psymbol">_not</span>!(<span class="d_keyword">false</span>));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="_all"></a><span class="ddoc_psymbol">_all</span>(alias Pred,T...)</dt>
+<dd>Determines if all elements of the typetuple satisfy the predicate.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_psymbol">_all</span>!(isFloatingPoint, <span class="d_keyword">int</span>, <span class="d_keyword">float</span>, <span class="d_keyword">char</span>) == <span class="d_keyword">false</span>);
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="_any"></a><span class="ddoc_psymbol">_any</span>(alias Pred,T...)</dt>
+<dd>Determine if any element of the typetuple satisfies the predicate.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_psymbol">_any</span>!(isFloatingPoint, <span class="d_keyword">int</span>, <span class="d_keyword">float</span>, <span class="d_keyword">char</span>) == <span class="d_keyword">true</span>);
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Id"></a><span class="ddoc_psymbol">Id</span>(T)</dt>
+<dd>Identity metafunction.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_psymbol">Id</span>!<span class="d_keyword">int</span> == <span class="d_keyword">int</span>);
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Curry"></a><span class="ddoc_psymbol">Curry</span>(alias Fun,Args...)</dt>
+<dd>Curries <b>Fun</b> by tying its first Args.length arguments to <b>Args</b>.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> <span class="d_psymbol">Curry</span>!(_and, <span class="d_keyword">true</span>) true_and;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(true_and!<span class="d_keyword">true</span> == <span class="d_keyword">true</span>);
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(true_and!<span class="d_keyword">false</span> == <span class="d_keyword">false</span>);
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">struct <a name="TypeList"></a><span class="ddoc_psymbol">TypeList</span>(T...);
+</dt>
+<dd>Creates a typelist out of a sequence of zero or more types.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> <span class="d_psymbol">TypeList</span>!(<span class="d_keyword">int</span>, <span class="d_keyword">float</span>, <span class="d_keyword">long</span>*) TL1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(TL1.items == TypeTuple!(<span class="d_keyword">int</span>, <span class="d_keyword">float</span>, <span class="d_keyword">long</span>*)));
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(TL1.dim == 1);
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(TL1.head == <span class="d_keyword">int</span>));
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(TL1.tail == <span class="d_psymbol">TypeList</span>!(<span class="d_keyword">float</span>, <span class="d_keyword">long</span>*)));
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(toString!TL1 == <span class="d_string">"[int,float,long*]"</span>);
+</pre>
+<p></p>
+
+<dl><dt class="d_decl">alias <a name="items"></a><span class="ddoc_psymbol">items</span>;
+</dt>
+<dd>A typetuple of all the elements of the typelist.<p></p>
+
+</dd>
+<dt class="d_decl">alias <a name="head"></a><span class="ddoc_psymbol">head</span>;
+</dt>
+<dd>The first element of the typelist.<p></p>
+
+</dd>
+<dt class="d_decl">alias <a name="last"></a><span class="ddoc_psymbol">last</span>;
+</dt>
+<dd>The <a name="last"></a><span class="ddoc_psymbol">last</span> element of the typelist.<p></p>
+
+</dd>
+<dt class="d_decl">alias <a name="tail"></a><span class="ddoc_psymbol">tail</span>;
+</dt>
+<dd>The elements after the head of the typelist.<p></p>
+
+</dd>
+<dt class="d_decl">alias <a name="init"></a><span class="ddoc_psymbol">init</span>;
+</dt>
+<dd>All the elements of the typelist except the last one.<p></p>
+
+</dd>
+<dt class="d_decl">string <a name="toString"></a><span class="ddoc_psymbol">toString</span>();
+</dt>
+<dd>Converts the typelist to a string representation.<p></p>
+
+</dd>
+</dl>
+</dd>
+<dt class="d_decl">template <a name="isTypeList"></a><span class="ddoc_psymbol">isTypeList</span>(T)</dt>
+<dd>Check to see if <b>T</b> is a TypeList.<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="_"></a><span class="ddoc_psymbol">_</span>(string TL)</dt>
+<dd>Constructs a typelist. EXPERIMENTAL.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> <span class="d_psymbol">_</span>!<span class="d_string">"[int, double, uint]"</span> TL1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(TL1 == TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">double</span>, <span class="d_keyword">uint</span>)));
+
+   <span class="d_keyword">alias</span> <span class="d_psymbol">_</span>!<span class="d_string">"[[char],[float,double]]"</span> TL2;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(TL2 == TypeList!(TypeList!(<span class="d_keyword">char</span>), TypeList!(<span class="d_keyword">float</span>, <span class="d_keyword">double</span>))));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Head"></a><span class="ddoc_psymbol">Head</span>(TL) if (isTypeList!(TL))</dt>
+<dd>Extract the first element of a typelist.<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Last"></a><span class="ddoc_psymbol">Last</span>(TL) if (isTypeList!(TL))</dt>
+<dd>Extract the last element of a typelist.<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Tail"></a><span class="ddoc_psymbol">Tail</span>(TL) if (isTypeList!(TL))</dt>
+<dd>Extract the elements after the head of a typelist.<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Init"></a><span class="ddoc_psymbol">Init</span>(TL) if (isTypeList!(TL))</dt>
+<dd>Return all the elements of a typelist except the last one.<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Empty"></a><span class="ddoc_psymbol">Empty</span>(TL) if (isTypeList!(TL))</dt>
+<dd>Test whether a typelist is empty.<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Length"></a><span class="ddoc_psymbol">Length</span>(TL) if (isTypeList!(TL))</dt>
+<dd>Returns the length of a typelist.<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Append"></a><span class="ddoc_psymbol">Append</span>(TL1,TL2) if (isTypeList!(TL1) &amp;&amp; isTypeList!(TL2))</dt>
+<dd><a name="Append"></a><span class="ddoc_psymbol">Append</span> two typelists.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">int</span>) TL1;
+   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">char</span>) TL2;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">Append</span>!(TL1, TL2) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">char</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Append"></a><span class="ddoc_psymbol">Append</span>(TL,T) if (isTypeList!(TL) &amp;&amp; !isTypeList!(T))</dt>
+<dd><a name="Append"></a><span class="ddoc_psymbol">Append</span> a type to a typelist.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">float</span>, <span class="d_keyword">double</span>) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">Append</span>!(TL1, <span class="d_keyword">real</span>) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">float</span>, <span class="d_keyword">double</span>, <span class="d_keyword">real</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Cons"></a><span class="ddoc_psymbol">Cons</span>(A,B) if (isTypeList!(B))</dt>
+<dd>Prepend a type to a typelist.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">float</span>) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">Cons</span>!(<span class="d_keyword">char</span>, TL1) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">char</span>, <span class="d_keyword">float</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="toString"></a><span class="ddoc_psymbol">toString</span>(TL) if (isTypeList!(TL))</dt>
+<dd>Converts a TypeList to string.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_psymbol">toString</span>!(TypeList!(<span class="d_keyword">float</span>, <span class="d_keyword">real</span>)) == <span class="d_string">"[float,real]"</span>);
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="sameTypes"></a><span class="ddoc_psymbol">sameTypes</span>(T1,T2)</dt>
+<dd>Returns <b>true</b> if <b>T1</b> and <b>T2</b> are of the same type.<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="equal"></a><span class="ddoc_psymbol">equal</span>(alias Pred,TL1,TL2) if (isTypeList!(TL1) &amp;&amp; isTypeList!(TL2))</dt>
+<dd>Returns <b>true</b> if and only if the two typelists compare <a name="equal"></a><span class="ddoc_psymbol">equal</span> element for
+   element, according to binary predicate Pred.<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Map"></a><span class="ddoc_psymbol">Map</span>(alias Fun,TL) if (isTypeList!(TL))</dt>
+<dd>A new typelist is obtained by applying <b>Fun</b> to each item of <b>TL</b>.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">immutable</span> <span class="d_keyword">double</span>, <span class="d_keyword">int</span>, <span class="d_keyword">const</span> <span class="d_keyword">char</span>) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">Map</span>!(Unqual, TL1) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">double</span>, <span class="d_keyword">int</span>, <span class="d_keyword">char</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Reverse"></a><span class="ddoc_psymbol">Reverse</span>(TL) if (isTypeList!(TL))</dt>
+<dd>Returns the elements of a typelist in reverse order.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">double</span>, <span class="d_keyword">char</span>) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">Reverse</span>!TL1 R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">char</span>, <span class="d_keyword">double</span>, <span class="d_keyword">int</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Intersperse"></a><span class="ddoc_psymbol">Intersperse</span>(T,TL) if (isTypeList!(TL))</dt>
+<dd>Intersperses <b>T</b> between the elements of the typelist.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">float</span>, <span class="d_keyword">double</span>, <span class="d_keyword">real</span>) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">Intersperse</span>!(string, TL1) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">float</span>, string, <span class="d_keyword">double</span>, string, <span class="d_keyword">real</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Transpose"></a><span class="ddoc_psymbol">Transpose</span>(TL) if (isTypeList!(TL))</dt>
+<dd>Transposes the rows and columns of its argument.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(TypeList!(<span class="d_keyword">float</span>, <span class="d_keyword">double</span>), TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">long</span>)) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">Transpose</span>!(TL1) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(TypeList!(<span class="d_keyword">float</span>, <span class="d_keyword">int</span>), TypeList!(<span class="d_keyword">double</span>, <span class="d_keyword">long</span>))));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Subsequences"></a><span class="ddoc_psymbol">Subsequences</span>(TL) if (isTypeList!(TL))</dt>
+<dd>Returns the typelist of all subsequences of the types.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">char</span>, <span class="d_keyword">int</span>) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">Subsequences</span>!TL1 R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(TypeList!(), TypeList!<span class="d_keyword">char</span>, TypeList!<span class="d_keyword">int</span>, TypeList!(<span class="d_keyword">char</span>, <span class="d_keyword">int</span>))));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Permutations"></a><span class="ddoc_psymbol">Permutations</span>(xs0) if (isTypeList!(xs0))</dt>
+<dd>Returns the typelist of all permutations of the argument.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> <span class="d_psymbol">Permutations</span>!(TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">uint</span>, <span class="d_keyword">char</span>)) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(toString!R1 == <span class="d_string">"[[int,uint,char],[uint,int,char],[char,uint,int],[uint,char,int],[char,int,uint],[int,char,uint]]"</span>);
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Foldl"></a><span class="ddoc_psymbol">Foldl</span>(alias Fun,Z,TL) if (isTypeList!(TL))</dt>
+<dd>Reduces a n-dimensional typelist from left to right.
+   <b>Fun</b> is the binary operator, and <b>Z</b> is the starting type.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">struct</span> C(<span class="d_keyword">int</span> n) { <span class="d_keyword">enum</span> cardinal = n; }
+
+   <span class="d_keyword">template</span> Minus(A, B)
+   {
+     <span class="d_keyword">alias</span> C!(A.cardinal - B.cardinal) Minus;
+   }
+
+   <span class="d_keyword">alias</span> TypeList!(C!2, C!3, C!7, C!4) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">Foldl</span>!(Minus, C!0, TL1) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == C!(-16)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Foldl1"></a><span class="ddoc_psymbol">Foldl1</span>(alias Fun,TL) if (isTypeList!(TL))</dt>
+<dd><a name="Foldl1"></a><span class="ddoc_psymbol">Foldl1</span> is a variant of <a href="#Foldl"><span class="d_inlinecode">Foldl</span></a> that has no starting type argument.<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Foldr"></a><span class="ddoc_psymbol">Foldr</span>(alias Fun,Z,TL) if (isTypeList!(TL))</dt>
+<dd>Reduces a n-dimensional typelist from right to left.
+   <b>Fun</b> is the binary operator, and <b>Z</b> is the starting type.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(C!2, C!3, C!7, C!4) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">Foldr</span>!(Minus, C!0, TL1) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == C!(2)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Foldr1"></a><span class="ddoc_psymbol">Foldr1</span>(alias Fun,TL) if (isTypeList!(TL))</dt>
+<dd><a name="Foldr1"></a><span class="ddoc_psymbol">Foldr1</span> is a variant of <a href="#Foldr"><span class="d_inlinecode">Foldr</span></a> that has no starting type argument.<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Concat"></a><span class="ddoc_psymbol">Concat</span>(TL) if (isTypeList!(TL))</dt>
+<dd>Concatenate a typelist of typelists.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> <span class="d_psymbol">Concat</span>!(TypeList!(TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">uint</span>), TypeList!<span class="d_keyword">char</span>, TypeList!(<span class="d_keyword">long</span>,<span class="d_keyword">ulong</span>))) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">uint</span>, <span class="d_keyword">char</span>, <span class="d_keyword">long</span>, <span class="d_keyword">ulong</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="ConcatMap"></a><span class="ddoc_psymbol">ConcatMap</span>(alias Fun,TL) if (isTypeList!(TL))</dt>
+<dd>Map a metafunction over a typelist and concatenate the results.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">template</span> Twice(T)
+   {
+     <span class="d_keyword">alias</span> TypeList!(T, T) Twice;
+   }
+
+   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">char</span>, <span class="d_keyword">int</span>, <span class="d_keyword">long</span>) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">ConcatMap</span>!(Twice, TL1) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">char</span>, <span class="d_keyword">char</span>, <span class="d_keyword">int</span>, <span class="d_keyword">int</span>, <span class="d_keyword">long</span>, <span class="d_keyword">long</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="all"></a><span class="ddoc_psymbol">all</span>(alias Pred,TL) if (isTypeList!(TL))</dt>
+<dd>Determines if <a name="all"></a><span class="ddoc_psymbol">all</span> elements of the typelist satisfy the predicate.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_psymbol">all</span>!(isFloatingPoint, TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">float</span>, <span class="d_keyword">char</span>)) == <span class="d_keyword">false</span>);
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="any"></a><span class="ddoc_psymbol">any</span>(alias Pred,TL) if (isTypeList!(TL))</dt>
+<dd>Determines if <a name="any"></a><span class="ddoc_psymbol">any</span> element of the typelist satisfies the predicate.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_psymbol">any</span>!(isFloatingPoint, TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">float</span>, <span class="d_keyword">char</span>)) == <span class="d_keyword">true</span>);
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Scanl"></a><span class="ddoc_psymbol">Scanl</span>(alias Fun,Q,TL) if (isTypeList!(TL))</dt>
+<dd>Returns a n-dimensional typelist of successive reduced types from the left.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(C!1, C!2, C!3) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">Scanl</span>!(Minus, C!4, TL1) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(C!4, C!3, C!1, C!(-2))));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Scanl1"></a><span class="ddoc_psymbol">Scanl1</span>(alias Fun,TL) if (isTypeList!(TL))</dt>
+<dd><a name="Scanl1"></a><span class="ddoc_psymbol">Scanl1</span> is a variant of <a href="#Scanl"><span class="d_inlinecode">Scanl</span></a> that has no starting type argument.<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Scanr"></a><span class="ddoc_psymbol">Scanr</span>(alias Fun,Q0,TL) if (isTypeList!(TL))</dt>
+<dd>Returns a n-dimensional typelist of successive reduced typess from the right.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(C!1, C!2, C!3) TL1;
+   <span class="d_keyword">alias</span> Scanl!(Minus, C!4, TL1) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(C!(-2), C!3, C!(-1), C!4)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Scanr1"></a><span class="ddoc_psymbol">Scanr1</span>(alias Fun,TL) if (isTypeList!(TL))</dt>
+<dd><a name="Scanr1"></a><span class="ddoc_psymbol">Scanr1</span> is a variant of <a href="#Scanr"><span class="d_inlinecode">Scanr</span></a> that has no starting type argument.<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="IterateN"></a><span class="ddoc_psymbol">IterateN</span>(int N,alias Fun,T)</dt>
+<dd>Returns a typelist of length <b>N</b> of repeated applications of <b>Fun</b> to <b>T</b>.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">struct</span> _1 { <span class="d_keyword">enum</span> value = 1; }
+
+   <span class="d_keyword">template</span> TimesTwo(T)
+   {
+     <span class="d_keyword">enum</span> string result = to!string(T.value * 2);
+     <span class="d_keyword">mixin</span>(xformat(<span class="d_string">"struct _%1$s { enum value = %1$s; } alias _%1$s TimesTwo;"</span>, result));
+   }
+
+   <span class="d_keyword">alias</span> <span class="d_psymbol">IterateN</span>!(6, TimesTwo, _1) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(toString!R1 == <span class="d_string">"[_1,_2,_4,_8,_16,_32]"</span>);
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Replicate"></a><span class="ddoc_psymbol">Replicate</span>(int N,T)</dt>
+<dd>Returns a typelist of length <b>N</b> with <b>T</b> the type of every element.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> <span class="d_psymbol">Replicate</span>!(3, <span class="d_keyword">char</span>) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">char</span>, <span class="d_keyword">char</span>, <span class="d_keyword">char</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="TakeN"></a><span class="ddoc_psymbol">TakeN</span>(int N,TL) if (isTypeList!(TL))</dt>
+<dd>Returns the prefix of <b>TL</b> of length <b>N</b>, or <b>TL</b> itself if <b>N &gt; TL.length</b>.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> <span class="d_psymbol">TakeN</span>!(3, TypeList!(C!1, C!2, C!3, C!4, C!5)) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(C!1, C!2, C!3)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="TakeWhile"></a><span class="ddoc_psymbol">TakeWhile</span>(alias Pred,TL) if (isTypeList!(TL))</dt>
+<dd>Returns the longest prefix of <b>TL</b> of elements that satisfy <b>Pred</b>.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">long</span>, <span class="d_keyword">char</span>, <span class="d_keyword">uint</span>, <span class="d_keyword">float</span>) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">TakeWhile</span>!(isIntegral, TL1) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">long</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="DropWhile"></a><span class="ddoc_psymbol">DropWhile</span>(alias Pred,TL) if (isTypeList!(TL))</dt>
+<dd>Returns the suffix remaining after <b>TakeWhile!(Pred, TL)</b>.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">uint</span>, <span class="d_keyword">long</span>, <span class="d_keyword">float</span>, <span class="d_keyword">double</span>, <span class="d_keyword">int</span>) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">DropWhile</span>!(isIntegral, TL1) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">float</span>, <span class="d_keyword">double</span>, <span class="d_keyword">int</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="Filter"></a><span class="ddoc_psymbol">Filter</span>(alias Pred,TL) if (isTypeList!(TL))</dt>
+<dd>Returns the typelist of those elements that satisfy the predicate.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">double</span>, <span class="d_keyword">uint</span>, <span class="d_keyword">float</span>, <span class="d_keyword">long</span>, <span class="d_keyword">ulong</span>) TL1;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">Filter</span>!(isIntegral, TL1) R1;
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">uint</span>, <span class="d_keyword">long</span>, <span class="d_keyword">ulong</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="ZipWith"></a><span class="ddoc_psymbol">ZipWith</span>(alias Fun,TL1,TL2) if (isTypeList!(TL1) &amp;&amp; isTypeList!(TL2))</dt>
+<dd>Takes two typelists and zips with the metafunction <b>Fun</b>.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">char</span>, <span class="d_keyword">double</span>) TL1;
+   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">float</span>, <span class="d_keyword">long</span>) TL2;
+
+   <span class="d_keyword">alias</span> <span class="d_psymbol">ZipWith</span>!(CommonType, TL1, TL2) R1;
+
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">float</span>, <span class="d_keyword">long</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="NubBy"></a><span class="ddoc_psymbol">NubBy</span>(alias Pred,TL) if (isTypeList!(TL))</dt>
+<dd>Removes duplicate elements from a typelist.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">double</span>, <span class="d_keyword">float</span>, <span class="d_keyword">int</span>, <span class="d_keyword">double</span>, <span class="d_keyword">double</span>, <span class="d_keyword">char</span>) TL1;
+
+   <span class="d_keyword">alias</span> <span class="d_psymbol">NubBy</span>!(sameTypes, TL1) R1;
+
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">double</span>, <span class="d_keyword">float</span>, <span class="d_keyword">char</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="DeleteBy"></a><span class="ddoc_psymbol">DeleteBy</span>(alias Pred,X,TL) if (isTypeList!(TL))</dt>
+<dd>Removes the first occurrence of <b>X</b> from its typelist argument using <b>Pred</b>.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">float</span>, <span class="d_keyword">char</span>, <span class="d_keyword">double</span>) TL1;
+
+   <span class="d_keyword">alias</span> <span class="d_psymbol">DeleteBy</span>!(sameTypes, <span class="d_keyword">float</span>, TL1) R1;
+
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">char</span>, <span class="d_keyword">double</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="UnionBy"></a><span class="ddoc_psymbol">UnionBy</span>(alias Pred,TL1,TL2) if (isTypeList!(TL1) &amp;&amp; isTypeList!(TL2))</dt>
+<dd>Returns the typelist union of the two typelists.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">double</span>, <span class="d_keyword">float</span>) TL1;
+   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">char</span>, <span class="d_keyword">double</span>, <span class="d_keyword">int</span>) TL2;
+
+   <span class="d_keyword">alias</span> <span class="d_psymbol">UnionBy</span>!(sameTypes, TL1, TL2) R1;
+
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">double</span>, <span class="d_keyword">float</span>, <span class="d_keyword">char</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="IntersectBy"></a><span class="ddoc_psymbol">IntersectBy</span>(alias Pred,TL1,TL2) if (isTypeList!(TL1) &amp;&amp; isTypeList!(TL2))</dt>
+<dd>Returns the typelist intersection of two typelists.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">char</span>, <span class="d_keyword">float</span>, <span class="d_keyword">double</span>) TL1;
+   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">double</span>, <span class="d_keyword">double</span>, <span class="d_keyword">uint</span>) TL2;
+
+   <span class="d_keyword">alias</span> <span class="d_psymbol">IntersectBy</span>!(sameTypes, TL1, TL2) R1;
+
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(<span class="d_keyword">double</span>)));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="GroupBy"></a><span class="ddoc_psymbol">GroupBy</span>(alias Pred,TL) if (isTypeList!(TL))</dt>
+<dd>Splits <b>TL</b> into a typelist of typelists.  <b>Pred</b> provides the equality test.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">int</span>, <span class="d_keyword">char</span>, <span class="d_keyword">float</span>, <span class="d_keyword">float</span>) TL1;
+
+   <span class="d_keyword">alias</span> <span class="d_psymbol">GroupBy</span>!(sameTypes, TL1) R1;
+
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(TypeList!(<span class="d_keyword">int</span>, <span class="d_keyword">int</span>), TypeList!(<span class="d_keyword">char</span>), TypeList!(<span class="d_keyword">float</span>, <span class="d_keyword">float</span>))));
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl">template <a name="SortBy"></a><span class="ddoc_psymbol">SortBy</span>(alias Less,TL) if (isTypeList!(TL))</dt>
+<dd>Returns a sorted typelist.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">struct</span> S1 { <span class="d_keyword">enum</span> ordinal = 1; }
+   <span class="d_keyword">struct</span> S2 { <span class="d_keyword">enum</span> ordinal = 2; }
+   <span class="d_keyword">struct</span> S3 { <span class="d_keyword">enum</span> ordinal = 3; }
+   <span class="d_keyword">struct</span> S4 { <span class="d_keyword">enum</span> ordinal = 4; }
+
+   <span class="d_keyword">template</span> Less(T1, T2)
+   {
+     <span class="d_keyword">static</span> <span class="d_keyword">if</span>(T1.ordinal &lt; T2.ordinal)
+       <span class="d_keyword">enum</span> Less = <span class="d_keyword">true</span>;
+     <span class="d_keyword">else</span>
+       <span class="d_keyword">enum</span> Less = <span class="d_keyword">false</span>;
+   }
+
+   <span class="d_keyword">alias</span> TypeList!(S1, S3, S2, S4, S1, S2, S4) TL1;
+
+   <span class="d_keyword">alias</span> <span class="d_psymbol">SortBy</span>!(Less, TL1) R1;
+
+   <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(R1 == TypeList!(S1, S1, S2, S2, S3, S4, S4)));
+</pre>
+<p></p>
+
+</dd>
+</dl>
+
+    
+<br><br>
+<br><br>
+<!-- Google ad -->
+<script type="text/javascript"><!--
+/**/google_ad_client = "pub-5628673096434613";
+/**/google_ad_width = 728;
+/**/google_ad_height = 90;
+/**/google_ad_format = "728x90_as";
+/**/google_ad_channel ="6203743411";
+/**/google_page_url = document.location;
+//--></script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><!--/content-->
+
+
+<div id="copyright">
+Copyright (c) 2012, Arlen Avakian
+ |
+Page generated by <a href="http://www.digitalmars.com/d/2.0/ddoc.html">Ddoc</a>.
+</div>
+
+</body>
+</html>
