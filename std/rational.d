@@ -12,6 +12,7 @@
 module std.rational;
 
 import std.traits  : isIntegral, isSigned, CommonType, Unqual, isFloatingPoint;
+import std.format  : formattedWrite;
 import std.numeric : gcd;
 import std.conv    : to;
 static import math = std.math;
@@ -101,9 +102,6 @@ unittest
 */
 struct Rational(T) if(isSignedIntegral!T)
 {
-  private T numerator;
-  private T denominator;
-
   static if(is(immutable Unqual!T == T) || is(const Unqual!T == T))
     private enum bool mutableT = false;
   else
@@ -111,25 +109,27 @@ struct Rational(T) if(isSignedIntegral!T)
 
   static if(mutableT)
   {
-    private bool dirty = true;
+    private T numerator;
+    private T denominator = 1;
+    private bool dirty;
   }
   else
   {
+    private T numerator, denominator;
     @disable this();
   }
 
   /// Converts the rational number to a string representation.
-  string toString() const
+  void toString(scope void delegate(const(char)[]) sink = null) const
   {
-    static if(mutableT)
-    {
-      Rational res = dirty ? Rational(this.numerator, this.denominator) : this;
-      return "(" ~ to!string(res.numerator) ~ "/" ~ to!string(res.denominator) ~ ")";
-    }
-    else 
-    {
-      return "(" ~ to!string(this.numerator) ~ "/" ~ to!string(this.denominator) ~ ")";
-    }
+    formattedWrite(sink, "(%s/%s)", this.num, this.den);
+  }
+
+  /// ditto
+  void toString(scope void delegate(const(char)[]) sink = null)
+  {
+    // non-const versions of num() and den() are called, which update if dirty.
+    formattedWrite(sink, "(%s/%s)", this.num, this.den);
   }
 
   /// Returns the numerator of the rational number.
@@ -408,6 +408,7 @@ unittest
   alias const long T2;
   alias long T3;
 
+
   immutable Rational!(T1) a1 = Rational!(T1)(1,2);
   immutable Rational!(T2) a2 = Rational!(T2)(1,3);
   immutable Rational!(T3) a3 = Rational!(T3)(1,4);
@@ -461,12 +462,16 @@ unittest
   // Convert to string.
   auto r1 = rational(3,4);
   auto r2 = rational(2,4);
+  immutable r3 = rational(4,12);
 
-  auto s1 = r1.toString();
+  auto s1 = to!string(r1);
   assert(s1 == "(3/4)");
 
-  auto s2 = r2.toString();
+  auto s2 = to!string(r2);
   assert(s2 == "(1/2)");
+
+  auto s3 = to!string(r3);
+  assert(s3 == "(1/3)");
 }
 
 /**
