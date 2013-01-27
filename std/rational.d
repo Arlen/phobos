@@ -11,14 +11,14 @@
 */
 module std.rational;
 
-import std.traits  : isIntegral, isSigned, CommonType, Unqual, isFloatingPoint;
-import std.format  : formattedWrite;
-import std.numeric : gcd;
-import std.conv    : to;
+import std.traits    : isIntegral, isSigned, CommonType, Unqual, isFloatingPoint;
+import std.format    : formattedWrite;
+import std.string    : xformat;
+import std.numeric   : gcd;
+import std.conv      : to;
+import std.exception : enforce;
 static import math = std.math;
 
-
-import std.stdio;  // remove when done
 
 private template isSignedIntegral(T)
 {
@@ -120,16 +120,16 @@ struct Rational(T) if(isSignedIntegral!T)
   }
 
   /// Converts the rational number to a string representation.
-  void toString(scope void delegate(const(char)[]) sink = null) const
+  void toString(scope void delegate(const(char)[]) sink, string fmt = "%s") const
   {
-    formattedWrite(sink, "(%s/%s)", this.num, this.den);
+    sink(xformat(fmt, xformat("(%s/%s)", this.num, this.den)));
   }
 
   /// ditto
-  void toString(scope void delegate(const(char)[]) sink = null)
+  void toString(scope void delegate(const(char)[]) sink, string fmt = "%s")
   {
     // non-const versions of num() and den() are called, which update if dirty.
-    formattedWrite(sink, "(%s/%s)", this.num, this.den);
+    sink(xformat(fmt, xformat("(%s/%s)", this.num, this.den)));
   }
 
   /// Returns the numerator of the rational number.
@@ -179,10 +179,9 @@ struct Rational(T) if(isSignedIntegral!T)
     }
 
     /// Sets the denominator to $(B d).
-    @property void den(T d) @safe pure nothrow
-    in {
-      assert(den != 0, "Denominator cannot be zero.");
-    } body {
+    @property void den(T d) @safe pure
+    {
+      enforce(den != 0, "Denominator cannot be zero.");
       if(!dirty)
         dirty = true;
       this.denominator = d;
@@ -190,10 +189,9 @@ struct Rational(T) if(isSignedIntegral!T)
   }
 
   this(T num, T den = 1) @safe pure
-  in {
-    assert(den != 0, "Denominator cannot be zero.");
-  } body {
-    T d = gcd(math.abs(num), math.abs(den)) * ((den < 0) ? -1 : 1);
+  {
+    enforce(den != 0, "Denominator cannot be zero.");
+    T d = gcd(math.abs(num), math.abs(den)) * (den < 0 ? -1 : 1);
     this.numerator = num / d;
     this.denominator = den / d;
   }
