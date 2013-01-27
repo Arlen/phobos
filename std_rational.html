@@ -211,7 +211,7 @@ function listanchors()
 <div id="content">
     
 <div id="tools">
-	<!--span id="lastupdate">Last update Sat Oct  6 01:20:25 2012
+	<!--span id="lastupdate">Last update Sun Jan 27 04:03:59 2013
 </span-->
 	<a href="https://github.com/D-Programming-Language/phobos/edit/master/std/rational.d" class="tip button">
 		Improve this page
@@ -242,8 +242,8 @@ This module contains the <a href="#Rational"><span class="d_inlinecode">Rational
 <b>Source:</b><br>
 <a href="https://github.com/D-Programming-Language/phobos/blob/master/std/rational.d">std/rational.d</a><p></p>
 
-<dl><dt class="d_decl">pure @safe auto <a name="rational"></a><span class="ddoc_psymbol">rational</span>(N)(N <i>num</i>);
-<br>pure @safe auto <a name="rational"></a><span class="ddoc_psymbol">rational</span>(N, D)(N <i>num</i>, D <i>den</i>);
+<dl><dt class="d_decl"><a name="rational"></a>pure @safe auto <a name="rational"></a><span class="ddoc_psymbol">rational</span>(N)(N <i>num</i>);
+<br><a name="rational"></a>pure @safe auto <a name="rational"></a><span class="ddoc_psymbol">rational</span>(N, D)(N <i>num</i>, D <i>den</i>);
 </dt>
 <dd>Helper function that returns a <a name="rational"></a><span class="ddoc_psymbol">rational</span> number with the specified
    numerator and denominator.
@@ -268,64 +268,133 @@ This function returns a <b>Rational!long</b> if neither <b>num</b> nor
 <p></p>
 
 </dd>
-<dt class="d_decl">struct <a name="Rational"></a><span class="ddoc_psymbol">Rational</span>(T) if (isSignedIntegral!(T));
+<dt class="d_decl"><a name="Rational"></a>struct <a name="Rational"></a><span class="ddoc_psymbol">Rational</span>(T) if (isSignedIntegral!(T));
 </dt>
 <dd>A rational number parameterised by a type <b>T</b>, which must be
    a signed integral.  The rational number is reduced to its simplest form.
    <a name="Rational"></a><span class="ddoc_psymbol">Rational</span> is more efficient if both the numerator and the denominator are
    immutable because it is simplified only once in the constructor.<p></p>
 
-<dl><dt class="d_decl">const string <a name="toString"></a><span class="ddoc_psymbol">toString</span>();
+<dl><dt class="d_decl"><a name="toString"></a>const void <a name="toString"></a><span class="ddoc_psymbol">toString</span>(scope void delegate(const(char)[]) <i>sink</i>, string <i>fmt</i> = "%s");
+<br><a name="toString"></a>void <a name="toString"></a><span class="ddoc_psymbol">toString</span>(scope void delegate(const(char)[]) <i>sink</i>, string <i>fmt</i> = "%s");
 </dt>
 <dd>Converts the rational number to a string representation.<p></p>
 
 </dd>
-<dt class="d_decl">const pure nothrow @safe T <a name="num"></a><span class="ddoc_psymbol">num</span>();
+<dt class="d_decl"><a name="num"></a>const pure nothrow @safe T <a name="num"></a><span class="ddoc_psymbol">num</span>();
 </dt>
 <dd>Returns the numerator of the rational number.<p></p>
 
 </dd>
-<dt class="d_decl">const pure nothrow @safe T <a name="den"></a><span class="ddoc_psymbol">den</span>();
+<dt class="d_decl"><a name="den"></a>const pure nothrow @safe T <a name="den"></a><span class="ddoc_psymbol">den</span>();
 </dt>
 <dd>Returns the denominator of the rational number.<p></p>
 
 </dd>
-<dt class="d_decl">pure @safe T <a name="num"></a><span class="ddoc_psymbol">num</span>();
+<dt class="d_decl"><a name="num"></a>pure @safe T <a name="num"></a><span class="ddoc_psymbol">num</span>();
 </dt>
 <dd>Returns the numerator of the rational number.  The rational number is
-       simplified if it is not already in simplified form.  This method is
-       available only if the numerator and the denominator are both mutable.<p></p>
+           simplified if it is not already in simplified form.  This method is
+           available only if the numerator and the denominator are both mutable.<p></p>
 
 </dd>
-<dt class="d_decl">pure @safe T <a name="den"></a><span class="ddoc_psymbol">den</span>();
+<dt class="d_decl"><a name="den"></a>pure @safe T <a name="den"></a><span class="ddoc_psymbol">den</span>();
 </dt>
-<dd>Returns the denominator of the rational number.  The rational number is
-       simplified if it is not already in simplified form.  This method is
-       available only if the numerator and the denominator are both mutable.<p></p>
+<dd>Returns the denominator of the rational number.  The rational number
+           is simplified if it is not already in simplified form.  This method is
+           available only if the numerator and the denominator are both mutable.<p></p>
 
 </dd>
-<dt class="d_decl">pure nothrow @safe void <a name="num"></a><span class="ddoc_psymbol">num</span>(T <i>n</i>);
+<dt class="d_decl"><a name="num"></a>pure nothrow @safe void <a name="num"></a><span class="ddoc_psymbol">num</span>(T <i>n</i>);
 </dt>
 <dd>Sets the numerator to <b><i>n</i></b>.<p></p>
 
 </dd>
-<dt class="d_decl">pure nothrow @safe void <a name="den"></a><span class="ddoc_psymbol">den</span>(T <i>d</i>);
+<dt class="d_decl"><a name="den"></a>pure @safe void <a name="den"></a><span class="ddoc_psymbol">den</span>(T <i>d</i>);
 </dt>
 <dd>Sets the denominator to <b><i>d</i></b>.<p></p>
 
 </dd>
-<dt class="d_decl">const nothrow F <a name="value"></a><span class="ddoc_psymbol">value</span>(F = double)();
+<dt class="d_decl"><a name="this"></a>pure @safe  this(T <i>num</i>, T <i>den</i> = 1);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="value"></a>const pure nothrow @safe F <a name="value"></a><span class="ddoc_psymbol">value</span>(F = double)();
 </dt>
 <dd>Converts the rational number to a floating-point representation.<p></p>
 
 </dd>
+<dt class="d_decl"><a name="opEquals"></a>const pure @safe bool <a name="opEquals"></a><span class="ddoc_psymbol">opEquals</span>(G)(Rational!(G) <i>other</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opEquals"></a>const pure @safe bool <a name="opEquals"></a><span class="ddoc_psymbol">opEquals</span>(G)(G <i>i</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opCmp"></a>const pure @safe int <a name="opCmp"></a><span class="ddoc_psymbol">opCmp</span>(G)(Rational!(G) <i>other</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opCmp"></a>const pure @safe int <a name="opCmp"></a><span class="ddoc_psymbol">opCmp</span>(G)(G <i>i</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opUnary"></a>const pure @safe Rational <a name="opUnary"></a><span class="ddoc_psymbol">opUnary</span>(string op)();
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinary"></a>const pure @safe Rational!(CommonType!(T, G)) <a name="opBinary"></a><span class="ddoc_psymbol">opBinary</span>(string op, G)(Rational!(G) <i>other</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinary"></a>const pure @safe Rational!(CommonType!(T, G)) <a name="opBinary"></a><span class="ddoc_psymbol">opBinary</span>(string op, G)(G <i>i</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinaryRight"></a>const pure @safe Rational!(CommonType!(T, G)) <a name="opBinaryRight"></a><span class="ddoc_psymbol">opBinaryRight</span>(string op, G)(G <i>i</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinaryRight"></a>const pure @safe Rational!(CommonType!(T, G)) <a name="opBinaryRight"></a><span class="ddoc_psymbol">opBinaryRight</span>(string op, G)(G <i>i</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinary"></a>const pure @safe Rational!(CommonType!(T, G)) <a name="opBinary"></a><span class="ddoc_psymbol">opBinary</span>(string op, G)(Rational!(G) <i>other</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinary"></a>const pure @safe Rational!(CommonType!(T, G)) <a name="opBinary"></a><span class="ddoc_psymbol">opBinary</span>(string op, G)(G <i>i</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinary"></a>const pure @safe Rational!(CommonType!(T, G)) <a name="opBinary"></a><span class="ddoc_psymbol">opBinary</span>(string op, G)(Rational!(G) <i>other</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinary"></a>const pure @safe Rational!(CommonType!(T, G)) <a name="opBinary"></a><span class="ddoc_psymbol">opBinary</span>(string op, G)(G <i>i</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinaryRight"></a>const pure @safe Rational!(CommonType!(T, G)) <a name="opBinaryRight"></a><span class="ddoc_psymbol">opBinaryRight</span>(string op, G)(G <i>i</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opOpAssign"></a>pure @safe Rational <a name="opOpAssign"></a><span class="ddoc_psymbol">opOpAssign</span>(string op, G)(Rational!(G) <i>other</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opOpAssign"></a>pure @safe Rational <a name="opOpAssign"></a><span class="ddoc_psymbol">opOpAssign</span>(string op, G)(G <i>i</i>);
+</dt>
+<dd><p></p>
+</dd>
 </dl>
 </dd>
-<dt class="d_decl">template <a name="isRational"></a><span class="ddoc_psymbol">isRational</span>(T)</dt>
+<dt class="d_decl"><a name="isRational"></a>template <a name="isRational"></a><span class="ddoc_psymbol">isRational</span>(T)</dt>
 <dd>Check to see if <b>T</b> is a Rational.<p></p>
 
 </dd>
-<dt class="d_decl">pure @safe Rational!(G) <a name="abs"></a><span class="ddoc_psymbol">abs</span>(G)(Rational!(G) <i>r</i>);
+<dt class="d_decl"><a name="abs"></a>pure @safe Rational!(G) <a name="abs"></a><span class="ddoc_psymbol">abs</span>(G)(Rational!(G) <i>r</i>);
 </dt>
 <dd>Calculates the absolute value.
 <p></p>
@@ -335,7 +404,7 @@ This function returns a <b>Rational!long</b> if neither <b>num</b> nor
 <p></p>
 
 </dd>
-<dt class="d_decl">pure @safe G <a name="ceil"></a><span class="ddoc_psymbol">ceil</span>(G)(Rational!(G) <i>r</i>);
+<dt class="d_decl"><a name="ceil"></a>pure @safe G <a name="ceil"></a><span class="ddoc_psymbol">ceil</span>(G)(Rational!(G) <i>r</i>);
 </dt>
 <dd>Returns the truncated value (towards positive infinity).
 <p></p>
@@ -345,7 +414,7 @@ This function returns a <b>Rational!long</b> if neither <b>num</b> nor
 <p></p>
 
 </dd>
-<dt class="d_decl">pure @safe G <a name="floor"></a><span class="ddoc_psymbol">floor</span>(G)(Rational!(G) <i>r</i>);
+<dt class="d_decl"><a name="floor"></a>pure @safe G <a name="floor"></a><span class="ddoc_psymbol">floor</span>(G)(Rational!(G) <i>r</i>);
 </dt>
 <dd>Returns the truncated value (towards negative infinity).
 <p></p>
@@ -355,7 +424,7 @@ This function returns a <b>Rational!long</b> if neither <b>num</b> nor
 <p></p>
 
 </dd>
-<dt class="d_decl">pure @safe G <a name="round"></a><span class="ddoc_psymbol">round</span>(G)(Rational!(G) <i>r</i>);
+<dt class="d_decl"><a name="round"></a>pure @safe G <a name="round"></a><span class="ddoc_psymbol">round</span>(G)(Rational!(G) <i>r</i>);
 </dt>
 <dd>Returns the truncated value (towards the nearest integer;
    (1/2) =&gt; 1; (-1/2) =&gt; -1).
