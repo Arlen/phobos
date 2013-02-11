@@ -1,0 +1,793 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html lang='en-US'>
+
+<!--
+	Copyright (c) 1999-2010 by Digital Mars
+	All Rights Reserved Written by Walter Bright
+	http://www.digitalmars.com
+  -->
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" >
+<title>std.units - D Programming Language - Digital Mars</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script src="/js/codemirror.js"></script>
+<script src="/js/d.js"></script>
+<script src="/js/run.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/css/codemirror.css" />
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+
+<script type="text/javascript">
+function listanchors()
+{
+    if (typeof inhibitQuickIndex !== 'undefined') return;
+    var a = document.getElementById("quickindex");
+    if (!a) return;
+    var newText = "";
+    var hash = new Array;
+    var n = 0;
+    var values = new Array;
+    // List all anchors.
+    for (var i = 0; i < document.anchors.length; i++)
+    {
+        var a = document.anchors[i];
+        var text = a.name;
+        if (hash[text] > 0) continue;
+        hash[text] = 1;
+        values[n++] = a.name
+    }
+
+    values.sort();
+
+    for(var i = 0; i < values.length; i++) {
+        var a = values[i];
+        newText += ' \x3Ca href="\x23' + a +
+            '"\x3E\x3Cspan class="d_psymbol"\x3E' + a + '\x3C/span\x3E\x3C/a\x3E';
+    }
+    if (newText != "") newText = "\x3Cp\x3E\x3Cb\x3EJump to:\x3C/b\x3E" + newText + "\x3C/p\x3E";
+    var a = document.getElementById("quickindex");
+    a.innerHTML = newText;
+}
+</script>
+
+<script src="/js/hyphenate.js" type="text/javascript"></script>
+
+</head>
+
+<body onload="listanchors()" class='hyphenate'>
+
+<div id="top">
+	<div id="search-box">
+		<form method="get" action="http://google.com/search">
+			<img src="/images/search-left.gif" width="11" height="22" alt=""><input id="q" name="q"><input type="image" id="search-submit" name="submit" src="/images/search-button.gif">
+			<input type="hidden" id="domains" name="domains" value="dlang.org">
+			<input type="hidden" id="sourceid" name="sourceid" value="google-search">
+			<div id="search-dropdown">
+				<select id="sitesearch" name="sitesearch" size="1">
+					<option value="dlang.org">Entire D  Site</option>
+					<option value="dlang.org/phobos">Library Reference</option>
+					<option value="www.digitalmars.com/d/archives">Newsgroup Archives</option>
+				</select>
+			</div>
+		</form>
+	</div>
+	<div id="header">
+		<a href="/"><img id="logo" width="125" height="95" border="0" alt="D Logo" src="/images/dlogo.png"></a>
+		<a id="d-language" href="/">D Programming Language </a>
+	</div>
+</div>
+
+<div id="navigation">
+    
+<div class="navblock">
+<form method="get" action="http://www.google.com/search">
+<div id="searchbox">
+<input name="q" size="10" value="RTL Search" onFocus='if(this.value == "RTL Search"){this.value="";}'>
+<input type="hidden" name="domains" value="www.digitalmars.com">
+<input type="hidden" name="sitesearch" value="www.digitalmars.com/d/2.0/phobos">
+<input type="hidden" name="sourceid" value="google-search">
+<input type="submit" name="submit" value="Go">
+</div>
+</form>
+<div id="toctop">
+    <ul><li><a href="../index.html" title="D Programming Language">D</a></li>
+	<li><a href="../spec.html" title="D Language Specification">Language</a></li>
+	<li><a href="../phobos/index.html" title="D Runtime Library">Phobos</a></li>
+	<li><a href="../phobos-prerelease/index.html" title="D Runtime Library (prerelease)">Phobos (prerelease)</a></li>
+	<li><a href="../comparison.html" title="Language Comparisons">Comparisons</a></li>
+    </ul>
+</div>
+</div>
+    
+<div class="navblock">
+    <ul><li><a href="object.html" title="root of object hierarchy">object</a></li>
+    </ul>
+    <h2><a href="index.html#std" title="D standard modules">std</a></h2>
+    <ul><li><a href="std_algorithm.html" title="General-purpose algorithms">std.algorithm</a></li>
+	<li><a href="std_array.html" title="Array functions">std.array</a></li>
+	<li><a href="std_ascii.html" title="Functions which operate on ASCII characters">std.ascii</a></li>
+	<li><a href="std_base64.html" title="Encode/decode base64 format">std.base64</a></li>
+	<li><a href="std_bigint.html" title="Arbitrary-precision ('bignum') arithmetic">std.bigint</a></li>
+	<li><a href="std_bitmanip.html" title="Bit-level manipulation">std.bitmanip</a></li>
+	<li><a href="std_compiler.html" title="Information about the D compiler implementation">std.compiler</a></li>
+	<li><a href="std_complex.html" title="Complex numbers">std.complex</a></li>
+	<li><a href="std_concurrency.html" title="Message Passing">std.concurrency</a></li>
+	<li><a href="std_container.html" title="Containers">std.container</a></li>
+	<li><a href="std_contracts.html" title="Think assert">std.contracts</a></li>
+	<li><a href="std_conv.html" title="Conversion of strings to integers">std.conv</a></li>
+	<li><a href="std_cpuid.html" title="CPU identification">std.cpuid</a></li>
+	<li><a href="std_csv.html" title="CSV file parser">std.csv</a></li>
+	<li><a href="std_ctype.html" title="Simple character classification">std.ctype</a></li>
+	<li><a href="std_date.html" title="Date and time functions">std.date</a></li>
+	<li><a href="std_datetime.html" title="Date and time-related types and functions">std.datetime</a></li>
+	<li><a href="std_demangle.html" title="Demangle D names">std.demangle</a></li>
+	<li><a href="std_encoding.html" title="Character and string encoding">std.encoding</a></li>
+	<li><a href="std_exception.html" title="Exceptions and error handling">std.exception</a></li>
+	<li><a href="std_file.html" title="Basic file operations">std.file</a></li>
+	<li><a href="std_format.html" title="Formatted conversions of values to strings">std.format</a></li>
+	<li><a href="std_functional.html" title="functional">std.functional</a></li>
+	<li><a href="std_getopt.html" title="Command line options">std.getopt</a></li>
+	<li><a href="std_gregorian.html" title="Gregorian Calendar">std.gregorian</a></li>
+	<li><a href="std_json.html" title="JSON reader">std.json</a></li>
+	<li><a href="std_math.html" title="the usual math functions">std.math</a></li>
+	<li><a href="std_mathspecial.html" title="mathematical special functions">std.mathspecial</a></li>
+	<li><a href="std_md5.html" title="Compute MD5 digests">std.md5</a></li>
+	<li><a href="std_metastrings.html" title="Metaprogramming with strings">std.metastrings</a></li>
+	<li><a href="std_mmfile.html" title="Memory mapped files">std.mmfile</a></li>
+	<li><a href="std_numeric.html" title="Numeric algorithms">std.numeric</a></li>
+	<li><a href="std_outbuffer.html" title="Assemble data into an array of bytes">std.outbuffer</a></li>
+	<li><a href="std_parallelism.html" title="High-level primitives for SMP parallelism">std.parallelism</a></li>
+	<li><a href="std_path.html" title="Manipulate file names, path names, etc.">std.path</a></li>
+	<li><a href="std_process.html" title="Create/destroy processes">std.process</a></li>
+	<li><a href="std_random.html" title="Random number generation">std.random</a></li>
+	<li><a href="std_range.html" title="Ranges">std.range</a></li>
+	<li><a href="std_regex.html" title="regular expressions">std.regex</a></li>
+	<li><a href="std_regexp.html" title="regular expressions (deprecated)">std.regexp</a></li>
+	<li><a href="std_signals.html" title="Signals">std.signals</a></li>
+	<li><a href="std_socket.html" title="Sockets">std.socket</a></li>
+	<li><a href="std_socketstream.html" title="Stream for a blocking, connected Socket">std.socketstream</a></li>
+	<li><a href="std_stdint.html" title="Integral types for various purposes">std.stdint</a></li>
+	<li><a href="std_stdio.html" title="Standard I/O">std.stdio</a></li>
+	<li><a href="std_cstream.html" title="Stream I/O">std.cstream</a></li>
+	<li><a href="std_stream.html" title="Stream I/O">std.stream</a></li>
+	<li><a href="std_string.html" title="Basic string operations">std.string</a></li>
+	<li><a href="std_system.html" title="Inquire about the CPU, operating system">std.system</a></li>
+	<li><a href="std_traits.html" title="Type traits">std.traits</a></li>
+	<li><a href="std_typecons.html" title="Type constructors">std.typecons</a></li>
+	<li><a href="std_typetuple.html" title="Type tuples">std.typetuple</a></li>
+	<li><a href="std_uni.html" title="Unicode classification">std.uni</a></li>
+	<li><a href="std_uri.html" title="Encode and decode Uniform Resource Identifiers (URIs)">std.uri</a></li>
+	<li><a href="std_utf.html" title="Encode and decode utf character encodings">std.utf</a></li>
+	<li><a href="std_uuid.html" title="Generate and use UUIDs">std.uuid</a></li>
+	<li><a href="std_variant.html" title="Stores all types in a uniform, dynamically-checked representation">std.variant</a></li>
+	<li><a href="std_xml.html" title="XML file processing">std.xml</a></li>
+	<li><a href="std_zip.html" title="Read/write zip archives">std.zip</a></li>
+	<li><a href="std_zlib.html" title="Compression / Decompression of data">std.zlib</a></li>
+	<li><a href="std_c_fenv.html" title="Floating point environment">std.c.fenv</a></li>
+	<li><a href="std_c_locale.html" title="Locale">std.c.locale</a></li>
+	<li><a href="std_c_math.html" title="Math">std.c.math</a></li>
+	<li><a href="std_c_process.html" title="Process">std.c.process</a></li>
+	<li><a href="std_c_stdarg.html" title="Variadic arguments">std.c.stdarg</a></li>
+	<li><a href="std_c_stddef.html" title="Standard definitions">std.c.stddef</a></li>
+	<li><a href="std_c_stdio.html" title="Standard I/O">std.c.stdio</a></li>
+	<li><a href="std_c_stdlib.html" title="Standard library">std.c.stdlib</a></li>
+	<li><a href="std_c_string.html" title="Strings">std.c.string</a></li>
+	<li><a href="std_c_time.html" title="Time">std.c.time</a></li>
+	<li><a href="std_c_wcharh.html" title="Wide characters">std.c.wcharh</a></li>
+	<li><a href="std_net_curl.html" title="High level curl wrapper">std.net.curl</a></li>
+	<li><a href="std_net_isemail.html" title="Validate e-mail addresses">std.net.isemail</a></li>
+	<li><a href="std_windows_charset.html" title="Conversion to/from Windows character sets">std.windows.charset</a></li>
+	<li><a href="index.html#std_windows" title="Modules specific to Windows">std.windows</a></li>
+	<li><a href="index.html#std_linux" title="Modules specific to Windows">std.linux</a></li>
+	<li><a href="index.html#std_c_windows" title="C Windows API">std.c.windows</a></li>
+	<li><a href="index.html#std_c_linux" title="C Linux API">std.c.linux</a></li>
+    </ul>
+    <h2><a href="index.html#etc" title="D etc modules">etc</a></h2>
+    <ul><li><a href="etc_c_curl.html" title="Interface to libcurl library">etc.c.curl</a></li>
+	<li><a href="etc_c_sqlite3.html" title="Interface to sqlite3 library">etc.c.sqlite3</a></li>
+	<li><a href="etc_c_zlib.html" title="Interface to zlib library">etc.c.zlib</a></li>
+    </ul>
+    <h2><a href="index.html#core" title="D core modules">core</a></h2>
+    <ul><li><a href="core_atomic.html" title="Atomic operations">core.atomic</a></li>
+	<li><a href="core_bitop.html" title="Bitwise operations">core.bitop</a></li>
+	<li><a href="core_cpuid.html" title="CPU identification">core.cpuid</a></li>
+	<li><a href="core_exception.html" title="Root of exception hierarchy">core.exception</a></li>
+	<li><a href="core_memory.html" title="Interface to memory management">core.memory</a></li>
+	<li><a href="core_runtime.html" title="Interface to D runtime library internals">core.runtime</a></li>
+	<li><a href="core_thread.html" title="Thread management">core.thread</a></li>
+	<li><a href="core_time.html" title="Core time functionality">core.time</a></li>
+	<li><a href="core_vararg.html" title="Variable function arguments">core.vararg</a></li>
+	<li><a href="core_sync_barrier.html" title="Synchronizing progress of a group of threads">core.sync.barrier</a></li>
+	<li><a href="core_sync_condition.html" title="Synchronized condition checking">core.sync.condition</a></li>
+	<li><a href="core_sync_config.html" title="Stuff for core.sync">core.sync.config</a></li>
+	<li><a href="core_sync_exception.html" title="SyncException">core.sync.exception</a></li>
+	<li><a href="core_sync_mutex.html" title="Mutexes">core.sync.mutex</a></li>
+	<li><a href="core_sync_rwmutex.html" title="R/W mutually exclusive access">core.sync.rwmutex</a></li>
+	<li><a href="core_sync_semaphore.html" title="Semaphores">core.sync.semaphore</a></li>
+    </ul>
+</div>
+</div><!--/navigation-->
+<div id="content">
+    
+<div id="tools">
+	<!--span id="lastupdate">Last update Sun Feb 10 16:07:42 2013
+</span-->
+	<a href="https://github.com/D-Programming-Language/phobos/edit/master/std/units.d" class="tip button">
+		Improve this page
+		<span>
+			Quickly fork, edit online, and submit a pull request for this page.
+			Requires a signed-in GitHub account. This works well for small changes.
+			If you'd like to make larger changes you may want to consider using
+			local clone.
+		</span>
+	</a>
+	<a href="http://www.prowiki.org/wiki4d/wiki.cgi?DocComments/" class="tip button">
+		Page wiki
+		<span>
+	        View or edit the community-maintained wiki page associated with this page.
+		</span>
+	</a>
+</div>
+    <h1>std.units</h1>
+    <div id=quickindex class=quickindex></div>
+    <!-- Generated by Ddoc from std/units.d -->
+std.<a name="units"></a><span class="ddoc_psymbol">units</span> is a D implementation of Boost.Units library.
+<p></p>
+<b>Authors:</b><br>Arlen Avakian
+<p></p>
+<b>License:</b><br><a href="http://boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+<p></p>
+<b>Source:</b><br>
+<a href="https://github.com/D-Programming-Language/phobos/blob/master/std/units.d">std/units.d</a>
+<p></p>
+<b>Acknowledgements:</b><br>
+Thanks to Matthias Christian Schabel, Steven Watanabe, and all the people who have contributed to Boost.<a name="units"></a><span class="ddoc_psymbol">units</span>.
+
+<p></p>
+<b>Synopsis:</b><br>
+<pre class="d_code">   <span class="d_keyword">import</span> std.<span class="d_psymbol">units</span>, std.complex, std.stdio;
+
+   Quantity!(si.Energy) work(Quantity!(si.Force) F, Quantity!(si.Length) dx)
+   {
+       <span class="d_keyword">return</span> F * dx;
+   }
+
+   <span class="d_keyword">void</span> main()
+   {
+       Quantity!(si.Force)  F  = 2.0 * si.newton;
+       Quantity!(si.Length) dx = 2.0 * si.meter;
+       Quantity!(si.Energy) E  = work(F, dx);
+       writefln(<span class="d_string">"F  = %s\ndx = %s\nE  = %s\n"</span>, F, dx, E);
+
+       <span class="d_keyword">alias</span> Complex!<span class="d_keyword">double</span> ComplexType;
+
+       Quantity!(si.ElectricPotential, ComplexType) v = complex(12.5, 0) * si.volts;
+       Quantity!(si.Current, ComplexType)           i = complex(3, 4) * si.amperes;
+       Quantity!(si.Resistance, ComplexType)        z = complex(1.5, -2) * si.ohms;
+       writefln(<span class="d_string">"V   = %s\nI   = %s\nZ   = %s\nI*Z = %s\nI*Z == V? %s"</span>,
+                v, i, z, i*z, i*z == v);
+   }
+</pre>
+   <pre class=console>
+   F  = 2 N
+   dx = 2 m
+   E  = 4 J
+<p></p>
+
+   V   = 12.5+0i V
+   I   = 3+4i A
+   Z   = 1.5-2i Ohm
+   I*Z = 12.5+0i V
+   I*Z == V? <b>true</b>
+   </pre><p></p>
+
+<dl><dt class="d_decl"><a name="QQ"></a>alias std.rational.Rational!(long).Rational <a name="QQ"></a><span class="ddoc_psymbol">QQ</span>;
+</dt>
+<dd><a name="QQ"></a><span class="ddoc_psymbol">QQ</span> be thy name.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="baseDimension"></a>template <a name="baseDimension"></a><span class="ddoc_psymbol">baseDimension</span>(string name)</dt>
+<dd>Defines a base dimension.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">  <span class="d_keyword">alias</span> <span class="d_psymbol">baseDimension</span>!<span class="d_string">"length"</span> lengthBaseDimension;
+  <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(lengthBaseDimension == <span class="d_string">"length_bd()"</span>);
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl"><a name="isBaseDimension"></a>template <a name="isBaseDimension"></a><span class="ddoc_psymbol">isBaseDimension</span>(T)</dt>
+<dd>Check to see if <b>T</b> is a BaseDimension.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="dimension"></a>template <a name="dimension"></a><span class="ddoc_psymbol">dimension</span>(pairs...)</dt>
+<dd>Given one or more <b>pairs</b> of base dimensions and exponents, this template
+   creates a composite <a name="dimension"></a><span class="ddoc_psymbol">dimension</span>, or simply put, a <a name="dimension"></a><span class="ddoc_psymbol">dimension</span>.  The resulting
+   <a name="dimension"></a><span class="ddoc_psymbol">dimension</span> is in the form of a reduced <a name="dimension"></a><span class="ddoc_psymbol">dimension</span>.  The exponents can be either
+   of type integer or Rational.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> <span class="d_psymbol">dimension</span>!(lengthBaseDimension, QQ(2)) areaDimension;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">dimension</span>!(massBaseDimension,    1,
+                    lengthBaseDimension,  2,
+                    timeBaseDimension,   -2) energyDimension;
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl"><a name="scale"></a>pure nothrow @safe Scale <a name="scale"></a><span class="ddoc_psymbol">scale</span>()(uint <i>base</i>, QQ <i>exponent</i>, string <i>name</i>, string <i>symbol</i>);
+<br><a name="scale"></a>pure nothrow @safe Scale <a name="scale"></a><span class="ddoc_psymbol">scale</span>(G)(uint <i>base</i>, G <i>exponent</i>, string <i>name</i>, string <i>symbol</i>);
+<br><a name="scale"></a>pure nothrow @safe Scale <a name="scale"></a><span class="ddoc_psymbol">scale</span>(E)(uint <i>base</i>, E <i>exponent</i>);
+</dt>
+<dd>Helper function that returns a <a name="scale"></a><span class="ddoc_psymbol">scale</span> with the specified <b>base</b> and
+   <b>exponent</b>.  The <b>name</b> and the <b>symbol</b> are optional.  Internally
+   if a <a name="scale"></a><span class="ddoc_psymbol">scale</span> value matches one of the predefined prefixes, the
+   <b>DecimalPrefix</b> and the <b>BinaryPrefix</b>, it will be used instead.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="isScale"></a>template <a name="isScale"></a><span class="ddoc_psymbol">isScale</span>(T)</dt>
+<dd>Check to see if <b>T</b> is a Scale.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix"></a>enum <a name="DecimalPrefix"></a><span class="ddoc_psymbol">DecimalPrefix</span>;
+</dt>
+<dd><p></p>
+<dl><dt class="d_decl"><a name="DecimalPrefix.Yocto"></a><a name="Yocto"></a><span class="ddoc_psymbol">Yocto</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Zepto"></a><a name="Zepto"></a><span class="ddoc_psymbol">Zepto</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Atto"></a><a name="Atto"></a><span class="ddoc_psymbol">Atto</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Femto"></a><a name="Femto"></a><span class="ddoc_psymbol">Femto</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Pico"></a><a name="Pico"></a><span class="ddoc_psymbol">Pico</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Nano"></a><a name="Nano"></a><span class="ddoc_psymbol">Nano</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Micro"></a><a name="Micro"></a><span class="ddoc_psymbol">Micro</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Milli"></a><a name="Milli"></a><span class="ddoc_psymbol">Milli</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Centi"></a><a name="Centi"></a><span class="ddoc_psymbol">Centi</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Deci"></a><a name="Deci"></a><span class="ddoc_psymbol">Deci</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Deka"></a><a name="Deka"></a><span class="ddoc_psymbol">Deka</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Hecto"></a><a name="Hecto"></a><span class="ddoc_psymbol">Hecto</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Kilo"></a><a name="Kilo"></a><span class="ddoc_psymbol">Kilo</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Mega"></a><a name="Mega"></a><span class="ddoc_psymbol">Mega</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Giga"></a><a name="Giga"></a><span class="ddoc_psymbol">Giga</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Tera"></a><a name="Tera"></a><span class="ddoc_psymbol">Tera</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Peta"></a><a name="Peta"></a><span class="ddoc_psymbol">Peta</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Exa"></a><a name="Exa"></a><span class="ddoc_psymbol">Exa</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Zetta"></a><a name="Zetta"></a><span class="ddoc_psymbol">Zetta</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="DecimalPrefix.Yotta"></a><a name="Yotta"></a><span class="ddoc_psymbol">Yotta</span></dt>
+<dd><p></p>
+</dd>
+</dl>
+</dd>
+<dt class="d_decl"><a name="BinaryPrefix"></a>enum <a name="BinaryPrefix"></a><span class="ddoc_psymbol">BinaryPrefix</span>;
+</dt>
+<dd><p></p>
+<dl><dt class="d_decl"><a name="BinaryPrefix.Kibi"></a><a name="Kibi"></a><span class="ddoc_psymbol">Kibi</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="BinaryPrefix.Mebi"></a><a name="Mebi"></a><span class="ddoc_psymbol">Mebi</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="BinaryPrefix.Gibi"></a><a name="Gibi"></a><span class="ddoc_psymbol">Gibi</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="BinaryPrefix.Tebi"></a><a name="Tebi"></a><span class="ddoc_psymbol">Tebi</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="BinaryPrefix.Pebi"></a><a name="Pebi"></a><span class="ddoc_psymbol">Pebi</span></dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="BinaryPrefix.Exbi"></a><a name="Exbi"></a><span class="ddoc_psymbol">Exbi</span></dt>
+<dd><p></p>
+</dd>
+</dl>
+</dd>
+<dt class="d_decl"><a name="baseUnit"></a>template <a name="baseUnit"></a><span class="ddoc_psymbol">baseUnit</span>(alias dimension, string name, string symbol) if (isDimension!(typeof(dimension)))</dt>
+<dd>Defines a base unit.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> <span class="d_psymbol">baseUnit</span>!(lengthDimension, <span class="d_string">"meter"</span>, <span class="d_string">"m"</span>) meterBaseUnit;
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl"><a name="scaledBaseUnit"></a>template <a name="scaledBaseUnit"></a><span class="ddoc_psymbol">scaledBaseUnit</span>(alias bu, alias scale) if (isBaseUnit!(typeof(bu)) &amp;&amp; (isScale!(typeof(scale)) || is(typeof(scale) == DecimalPrefix) || is(typeof(scale) == BinaryPrefix)))</dt>
+<dd>Defines a base unit that is a multiple of base unit <b>bu</b>.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> <span class="d_psymbol">scaledBaseUnit</span>!(cgs.gramBaseUnit, DecimalPrefix.Kilo) kilogramBaseUnit;
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl"><a name="scaledBaseUnit"></a>template <a name="scaledBaseUnit"></a><span class="ddoc_psymbol">scaledBaseUnit</span>(alias bu, alias scale, string name, string symbol) if (isBaseUnit!(typeof(bu)) &amp;&amp; (isScale!(typeof(scale)) || is(typeof(scale) == DecimalPrefix) || is(typeof(scale) == BinaryPrefix)))</dt>
+<dd>Defines a base unit, named <b>name</b> and having the symbol <b>symbol</b>, that
+   is a multiple of base unit <b>bu</b>.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> baseUnit!(cgs.gramBaseUnit, scale(10, 3), <span class="d_string">""</span>, <span class="d_string">"グラム"</span>) newKilogramBaseUnit;
+   writeln(2.0 * UnitOf!(newKilogramBaseUnit)());
+</pre>
+   <pre class=console>
+   2 kグラム
+   </pre><p></p>
+
+</dd>
+<dt class="d_decl"><a name="baseUnitWithConversion"></a>template <a name="baseUnitWithConversion"></a><span class="ddoc_psymbol">baseUnitWithConversion</span>(string name, string symbol, U, string factor) if (isUnit!(U) &amp;&amp; isValidFactor!(factor))<br><a name="baseUnitWithConversion"></a>template <a name="baseUnitWithConversion"></a><span class="ddoc_psymbol">baseUnitWithConversion</span>(string name, string symbol, alias bu, string factor) if (is(typeof(bu) == BaseUnit) &amp;&amp; isValidFactor!(factor))</dt>
+<dd>Defines a base unit and conversion to a dimensionally-consistent unit <b>U</b>
+   or a base unit <b>bu</b>.  <b>factor</b> is string representation of a numeric
+   value, be it an integer, real, or rational.
+   This does what BOOST_UNITS_DEFINE_BASE_UNIT_WITH_CONVERSIONS in BOOST.units does.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> <span class="d_psymbol">baseUnitWithConversion</span>!(<span class="d_string">"pint"</span>, <span class="d_string">"pt"</span>, si.volume, <span class="d_string">"QQ(946353, 2000000000)"</span>) pintBaseUnit;
+   <span class="d_keyword">alias</span> <span class="d_psymbol">baseUnitWithConversion</span>!(<span class="d_string">"pound"</span>, <span class="d_string">"lb"</span>, cgs.gramBaseUnit, <span class="d_string">"453.592"</span>) poundBaseUnit;
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl"><a name="DefineBaseUnit"></a>template <a name="DefineBaseUnit"></a><span class="ddoc_psymbol">DefineBaseUnit</span>(alias dimension, string name, string symbol)</dt>
+<dd>Defines a base unit and conversions to other units or to other base units
+   with the correct dimensions.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> <span class="d_psymbol">DefineBaseUnit</span>!(lengthDimension, <span class="d_string">"ABC"</span>, <span class="d_string">"abc"</span>) Abc;
+</pre>
+<p></p>
+
+<dl><dt class="d_decl"><a name="WithConversionFactors"></a>template <a name="WithConversionFactors"></a><span class="ddoc_psymbol">WithConversionFactors</span>(Pairs...)</dt>
+<dd>with conversion factors <b>Pairs</b>, where each pair is either a unit and
+       a factor or a base unit and a factor.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">       <span class="d_keyword">alias</span> Abc.<span class="d_psymbol">WithConversionFactors</span>!(cgs.centimeterBaseUnit, <span class="d_string">"QQ(2,3)"</span>) AbcBaseUnit1;
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl"><a name="WithDefaultConversion"></a>template <a name="WithDefaultConversion"></a><span class="ddoc_psymbol">WithDefaultConversion</span>(U) if (isUnit!(U))</dt>
+<dd>with a default conversion <b>U</b> which is applied when no direct
+       conversion is available.  <b>U</b> is any unit with the same dimensions.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">       <span class="d_keyword">alias</span> Abc.<span class="d_psymbol">WithDefaultConversion</span>!(si.Length) AbcBaseUnit2;
+</pre>
+<p></p>
+
+</dd>
+<dt class="d_decl"><a name="WithConversions"></a>template <a name="WithConversions"></a><span class="ddoc_psymbol">WithConversions</span>(U, Pairs...) if (isUnit!(U))</dt>
+<dd>with a default conversion <b>U</b> and conversion factors <b>Pairs</b>.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">       <span class="d_keyword">alias</span> Abc.<span class="d_psymbol">WithConversions</span>!(si.Length, cgs.centimeterBaseUnit, <span class="d_string">"QQ(2,3)"</span>) AbcBaseUnit3;
+</pre>
+<p></p>
+
+</dd>
+</dl>
+</dd>
+<dt class="d_decl"><a name="defineUnitInfo"></a>void <a name="defineUnitInfo"></a><span class="ddoc_psymbol">defineUnitInfo</span>(U)(string <i>name</i>, string <i>symbol</i>);
+</dt>
+<dd>Use this to define a <b>name</b> and a <b>symbol</b> for derived unit <b>U</b>.
+   Subsequent calls will override the previous definition.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   writeln(2.0 * si.Energy());
+</pre>
+   <pre class=console>
+   2 J
+   </pre>
+<pre class="d_code">   <span class="d_psymbol">defineUnitInfo</span>!(si.Energy)(<span class="d_string">"XYZ"</span>, <span class="d_string">"xyz"</span>);
+   writeln(2.0 * si.Energy());
+</pre>
+   <pre class=console>
+   2 xyz
+   </pre><p></p>
+
+</dd>
+<dt class="d_decl"><a name="Unit"></a>struct <a name="Unit"></a><span class="ddoc_psymbol">Unit</span>(alias dim, alias sys) if (isHomogeneousSystem!(typeof(sys)) || isHeterogeneousSystem!(typeof(sys)));
+</dt>
+<dd>struct representing a model-dependent unit with no associated value.<p></p>
+
+<dl><dt class="d_decl"><a name="System"></a>alias typeof(sys) <a name="System"></a><span class="ddoc_psymbol">System</span>;
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="dimension"></a>Dimension <a name="dimension"></a><span class="ddoc_psymbol">dimension</span>;
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="system"></a>System <a name="system"></a><span class="ddoc_psymbol">system</span>;
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="info"></a>UnitInfo <a name="info"></a><span class="ddoc_psymbol">info</span>;
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="hasDimensionlessSystem"></a>bool <a name="hasDimensionlessSystem"></a><span class="ddoc_psymbol">hasDimensionlessSystem</span>;
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opUnary"></a>pure nothrow @safe Unit <a name="opUnary"></a><span class="ddoc_psymbol">opUnary</span>(string op)();
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinary"></a>pure nothrow @safe Unit <a name="opBinary"></a><span class="ddoc_psymbol">opBinary</span>(string op)(Unit <i>other</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinary"></a>nothrow auto <a name="opBinary"></a><span class="ddoc_psymbol">opBinary</span>(string op, U)(U <i>other</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="power"></a>template <a name="power"></a><span class="ddoc_psymbol">power</span>(alias r)</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="root"></a>template <a name="root"></a><span class="ddoc_psymbol">root</span>(alias r)</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinary"></a>Quantity!(Unit, N) <a name="opBinary"></a><span class="ddoc_psymbol">opBinary</span>(string op, N)(N <i>n</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinaryRight"></a>auto <a name="opBinaryRight"></a><span class="ddoc_psymbol">opBinaryRight</span>(string op, N)(N <i>n</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="toString"></a>const void <a name="toString"></a><span class="ddoc_psymbol">toString</span>(scope void delegate(const(char)[]) <i>sink</i>, FormatSpec!(char) <i>fmtspec</i>);
+</dt>
+<dd>Converts the unit to a string representation.
+<p></p>
+<b>Supported Formats:</b><br>
+<b>'y'</b> for symbol format;  reduces unit names to known symbols for
+           both base and derived units.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">           writefln(<span class="d_string">"%y"</span>, si.Force() * si.Length());
+           writefln(<span class="d_string">"%y"</span>, si.Force() * si.Energy()); <span class="d_comment">// unknown
+</span></pre>
+           <pre class=console>
+           J
+           kg^2 m^3 s^-4
+           </pre>
+<p></p>
+
+           <b>'n'</b> for name format; outputs full unit names for base and
+           derived units.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">           writefln(<span class="d_string">"%n"</span>, si.Force() * si.Length());
+</pre>
+           <pre class=console>
+           joule
+           </pre>
+<p></p>
+
+           <b>'r'</b> for raw format; outputs only symbols for base units but not
+           derived units.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">           writefln(<span class="d_string">"%r"</span>, si.Force() * si.Length());
+</pre>
+           <pre class=console>
+           kg m^2 s^-2
+           </pre>
+<p></p>
+
+           <b>'s'</b> defaults to symbol format.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">           writeln(si.Force() * si.Length());
+</pre>
+           <pre class=console>
+           J
+           </pre><p></p>
+
+</dd>
+</dl>
+</dd>
+<dt class="d_decl"><a name="ScaledUnit"></a>template <a name="ScaledUnit"></a><span class="ddoc_psymbol">ScaledUnit</span>(U, alias scale) if (isUnit!(U) &amp;&amp; isHomogeneousSystem!(U.System))<br><a name="ScaledUnit"></a>template <a name="ScaledUnit"></a><span class="ddoc_psymbol">ScaledUnit</span>(U, alias scale) if (isUnit!(U) &amp;&amp; isHeterogeneousSystem!(U.System))</dt>
+<dd>Defines a unit that is a multiple of unit <b>U</b>.
+<p></p>
+<b>Examples:</b><br><pre class="d_code">   <span class="d_keyword">alias</span> <span class="d_psymbol">ScaledUnit</span>!(si.Time, scale(10, -9)) Nanosecond;
+   Quantity!(Nanosecond) t = 1.0 * si.seconds;
+   writeln(t1);
+</pre>
+   <pre class=console>
+   1e9 ns
+   </pre><p></p>
+
+</dd>
+<dt class="d_decl"><a name="isUnit"></a>template <a name="isUnit"></a><span class="ddoc_psymbol">isUnit</span>(T)</dt>
+<dd>Check to see if <b>T</b> is a Unit.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="isDimensionlessUnit"></a>template <a name="isDimensionlessUnit"></a><span class="ddoc_psymbol">isDimensionlessUnit</span>(U) if (isUnit!(U))</dt>
+<dd>Check to see if <b>U</b> is a dimensionless unit.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="makeSystem"></a>template <a name="makeSystem"></a><span class="ddoc_psymbol">makeSystem</span>(BU...)</dt>
+<dd>Returns a homogeneous system that can represent any combination of the base
+   units.  There must be no way to represent any of the base units in terms of
+   the others.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="UnitOf"></a>template <a name="UnitOf"></a><span class="ddoc_psymbol">UnitOf</span>(alias bu) if (isBaseUnit!(typeof(bu)))</dt>
+<dd>Returns the unit corresponding to base unit <b>bu</b>.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="Quantity"></a>struct <a name="Quantity"></a><span class="ddoc_psymbol">Quantity</span>(U, Y = double) if ((isUnit!(U) || isAbsolute!(U)) &amp;&amp; !isUnit!(Y) &amp;&amp; !isAbsolute!(Y));
+</dt>
+<dd>struct representing a quantity.<p></p>
+
+<dl><dt class="d_decl"><a name="UnitType"></a>alias U <a name="UnitType"></a><span class="ddoc_psymbol">UnitType</span>;
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="ValueType"></a>alias Y <a name="ValueType"></a><span class="ddoc_psymbol">ValueType</span>;
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="this"></a>pure nothrow @safe  this()(ValueType <i>val</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="this"></a>pure nothrow @safe  this(Qu)(Qu <i>source</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="this"></a>pure nothrow @safe  this(Qu)(Qu <i>source</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opAssign"></a>pure nothrow @safe Quantity <a name="opAssign"></a><span class="ddoc_psymbol">opAssign</span>(T : ValueType)(T <i>val</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opAssign"></a>pure nothrow @safe Quantity <a name="opAssign"></a><span class="ddoc_psymbol">opAssign</span>(Qu)(Qu <i>source</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opOpAssign"></a>pure nothrow @safe Quantity <a name="opOpAssign"></a><span class="ddoc_psymbol">opOpAssign</span>(string op)(Quantity <i>source</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="this"></a>pure nothrow @safe  this(T : ValueType)(Quantity!(U, T) <i>source</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="value"></a>const pure nothrow @safe ValueType <a name="value"></a><span class="ddoc_psymbol">value</span>();
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opOpAssign"></a>pure nothrow ref @safe auto <a name="opOpAssign"></a><span class="ddoc_psymbol">opOpAssign</span>(string op)(ValueType <i>source</i>);
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opDispatch"></a>Quantity <a name="opDispatch"></a><span class="ddoc_psymbol">opDispatch</span>(string fn)();
+</dt>
+<dd>Used to apply a function to the value of this quantity.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="opUnary"></a>const pure nothrow @safe Quantity <a name="opUnary"></a><span class="ddoc_psymbol">opUnary</span>(string op)();
+</dt>
+<dd><p></p>
+</dd>
+<dt class="d_decl"><a name="opBinary"></a>const pure nothrow @safe Quantity <a name="opBinary"></a><span class="ddoc_psymbol">opBinary</span>(string op, N)(N <i>x</i>);
+</dt>
+<dd>quantity * value and quantity / value<p></p>
+
+</dd>
+<dt class="d_decl"><a name="opBinaryRight"></a>const pure nothrow @safe auto <a name="opBinaryRight"></a><span class="ddoc_psymbol">opBinaryRight</span>(string op, N)(N <i>val</i>);
+</dt>
+<dd>value * quantity and value / quantity<p></p>
+
+</dd>
+<dt class="d_decl"><a name="opBinary"></a>const pure nothrow @safe auto <a name="opBinary"></a><span class="ddoc_psymbol">opBinary</span>(string op, U)(U <i>u</i>);
+</dt>
+<dd>quantity * unit and quantity / unit<p></p>
+
+</dd>
+<dt class="d_decl"><a name="opBinaryRight"></a>const pure nothrow @safe auto <a name="opBinaryRight"></a><span class="ddoc_psymbol">opBinaryRight</span>(string op, U)(U <i>u</i>);
+</dt>
+<dd>unit * quantity and unit / quantity<p></p>
+
+</dd>
+<dt class="d_decl"><a name="opBinary"></a>const pure nothrow @safe Quantity <a name="opBinary"></a><span class="ddoc_psymbol">opBinary</span>(string op)(Quantity <i>other</i>);
+</dt>
+<dd>quantityA + quantityA and quantityA - quantityA<p></p>
+
+</dd>
+<dt class="d_decl"><a name="opBinary"></a>const pure nothrow @safe auto <a name="opBinary"></a><span class="ddoc_psymbol">opBinary</span>(string op, Qu)(Qu <i>other</i>);
+</dt>
+<dd>quantity * quantity and quantity / quantity<p></p>
+
+</dd>
+<dt class="d_decl"><a name="power"></a>const pure nothrow @property @safe auto <a name="power"></a><span class="ddoc_psymbol">power</span>(alias r)();
+</dt>
+<dd>Raises the quantity as a whole to the <a name="power"></a><span class="ddoc_psymbol">power</span> of <b>r</b>.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="root"></a>const pure nothrow @property @safe auto <a name="root"></a><span class="ddoc_psymbol">root</span>(alias r)();
+</dt>
+<dd>Returns the <a name="root"></a><span class="ddoc_psymbol">root</span> value of the quantity as a whole.<p></p>
+
+</dd>
+</dl>
+</dd>
+<dt class="d_decl"><a name="isQuantity"></a>template <a name="isQuantity"></a><span class="ddoc_psymbol">isQuantity</span>(T)</dt>
+<dd>Check to see if <b>T</b> is a Quantity.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="isDimensionlessQuantity"></a>template <a name="isDimensionlessQuantity"></a><span class="ddoc_psymbol">isDimensionlessQuantity</span>(Q) if (isQuantity!(Q))</dt>
+<dd>Check to see if <b>Q</b> is a dimensionless quantity.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="Absolute"></a>struct <a name="Absolute"></a><span class="ddoc_psymbol">Absolute</span>(Y);
+</dt>
+<dd>A wrapper to represent absolute units (points rather than vectors).<p></p>
+
+</dd>
+<dt class="d_decl"><a name="isAbsolute"></a>template <a name="isAbsolute"></a><span class="ddoc_psymbol">isAbsolute</span>(T)</dt>
+<dd>Check to see if <b>T</b> is an Absolute.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="amountBaseDimension"></a>alias baseDimension!("amount").baseDimension <a name="amountBaseDimension"></a><span class="ddoc_psymbol">amountBaseDimension</span>;
+</dt>
+<dd>base dimensions.<p></p>
+
+</dd>
+<dt class="d_decl"><a name="absorbedDoseDimension"></a>alias dimension!("length_bd()", 2, "time_bd()", -2).dimension <a name="absorbedDoseDimension"></a><span class="ddoc_psymbol">absorbedDoseDimension</span>;
+</dt>
+<dd>dimensions.<p></p>
+
+</dd>
+</dl>
+
+    
+<br><br>
+<br><br>
+<!-- Google ad -->
+<script type="text/javascript"><!--
+/**/google_ad_client = "pub-5628673096434613";
+/**/google_ad_width = 728;
+/**/google_ad_height = 90;
+/**/google_ad_format = "728x90_as";
+/**/google_ad_channel ="6203743411";
+/**/google_page_url = document.location;
+//--></script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><!--/content-->
+
+
+<div id="copyright">
+Copyright (c) 2012, Arlen Avakian
+ |
+Page generated by <a href="http://www.digitalmars.com/d/2.0/ddoc.html">Ddoc</a>.
+</div>
+
+</body>
+</html>
