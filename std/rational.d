@@ -264,21 +264,15 @@ struct Rational(T) if (isSignedIntegral!T)
         return this.num == i && this.den == 1;
     }
 
-    // rational cmp rational
+    // rational cmp rational and rational cmp integral
     ///
-    int opCmp(G)(Rational!G other) @safe const pure nothrow
+    int opCmp(T)(T other) @safe const pure nothrow
+    if (isSignedIntegral!T || isRational!T)
     {
         auto diff = (this - other).num;
         if (diff < 0) return -1;
         if (diff > 0) return  1;
         return 0;
-    }
-
-    // rational cmp integral
-    ///
-    int opCmp(G)(G i) @safe const pure nothrow if (isSignedIntegral!G)
-    {
-        return this.opCmp(Rational(i));
     }
 
     // -rational
@@ -304,7 +298,7 @@ struct Rational(T) if (isSignedIntegral!T)
     @safe const pure nothrow if ((op == "+" || op == "-") && isSignedIntegral!G)
     {
         alias typeof(return) R;
-        return this.opBinary!(op, CommonType!(T,G))(R(i));
+        return R(mixin("this.num" ~ op ~ "i * this.den"), this.den);
     }
 
     // integral + rational, integral * rational
@@ -321,7 +315,7 @@ struct Rational(T) if (isSignedIntegral!T)
     @safe const pure nothrow if ((op == "-") && isSignedIntegral!G)
     {
         alias typeof(return) R;
-        return R(i).opBinary!(op, CommonType!(T,G))(this);
+        return R(i * this.den - this.num, this.den);
     }
 
     // rational * rational
@@ -339,7 +333,7 @@ struct Rational(T) if (isSignedIntegral!T)
     @safe const pure nothrow if (op == "*" && isSignedIntegral!G)
     {
         alias typeof(return) R;
-        return this.opBinary!(op, CommonType!(T,G))(R(i));
+        return R(this.num * i, this.den);
     }
 
     // rational / rational
@@ -357,7 +351,7 @@ struct Rational(T) if (isSignedIntegral!T)
     @safe const pure nothrow if (op == "/" && isSignedIntegral!G)
     {
         alias typeof(return) R;
-        return opBinary!(op, CommonType!(T,G))(R(i));
+        return R(this.num, this.den * i);
     }
 
     // integral / rational
@@ -366,7 +360,7 @@ struct Rational(T) if (isSignedIntegral!T)
     @safe const pure nothrow if (op == "/" && isSignedIntegral!G)
     {
         alias typeof(return) R;
-        return R(i).opBinary!(op, CommonType!(T,G))(this);
+        return R(i * this.den, this.num);
     }
 
     ///
@@ -384,18 +378,22 @@ struct Rational(T) if (isSignedIntegral!T)
         return this;
     }
 }
+void main() { }
 
 unittest
 {
     auto r1 = rational(2, 3);
     auto r2 = rational(-1, 4);
     auto r3 = rational(0);
+    auto r4 = rational(4);
 
     // Check equality
     assert(r1 != r2);
     assert(r2 == r2);
     assert(r3.num == 0);
     assert(r3.den == 1);
+    assert(r4 == 4);
+    assert(4 == r4);
 
     // Check comparison
     assert(r1 > r2);
@@ -404,6 +402,14 @@ unittest
     assert(r2 < r1);
     assert(r2 <= r1);
     assert(!(r2 >= r1));
+    assert(r1 < 1);
+    assert(r1 > 0);
+    assert(1 > r1);
+    assert(0 < r1);
+    assert(r2 < 0);
+    assert(r2 > -1);
+    assert(0 > r2);
+    assert(-1 < r2);
 }
 
 unittest
@@ -448,6 +454,7 @@ unittest
     assert(rdi.num == 1);
     assert(rdi.den == 3);
 
+    // Check integral-rational operations.
     auto ipr = a + r1;
     assert(ipr.num == 11);
     assert(ipr.den == 3);
